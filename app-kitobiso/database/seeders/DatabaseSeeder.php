@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory(count:10)->create();
-        Funding::create(Attribute:[
+        Funding::create([
             'title' => 'Bantu Anak Yatim',
             'desc' => 'Bantu anak yatim piatu yang membutuhkan',
             'image' => 'yatim.jpg',
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'target' => 1000000,
             'user_id' => 1
         ]);
-        Donation::create(Attribute:[
+        Donation::create([
             'amount' => 100000,
             'funding_id' => 1,
             'user_id' => 2
