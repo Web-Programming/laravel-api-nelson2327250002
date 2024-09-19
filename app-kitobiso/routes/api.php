@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\FundingController;
 use Illuminate\Http\Request;
@@ -50,13 +51,20 @@ Route::get('/donatur', function (Request $request) {
 ]
 */    
 
-//API CRUD Funding
-Route::get('/Funding', [FundingController::class, 'index']); //get all data
-Route::post('/Funding', [FundingController::class, 'store']); //create new data
-Route::get('/Funding/{id}', [FundingController::class, 'show']); //get single data
-Route::put('/Funding/{id}', [FundingController::class, 'update']); //update data
-Route::delete('/Funding/{id}', [FundingController::class, 'destroy']); //delete data
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    //API CRUD Funding
+    Route::get('/Funding', [FundingController::class, 'index']); //get all data
+    Route::post('/Funding', [FundingController::class, 'store']); //create new data
+    Route::get('/Funding/{id}', [FundingController::class, 'show']); //get single data
+    Route::put('/Funding/{id}', [FundingController::class, 'update']); //update data
+    Route::delete('/Funding/{id}', [FundingController::class, 'destroy']); //delete data
 
-//API CRUD Donation
-//Route::get('/Donation', [DonationController::class, 'index']); //get all data
-Route::apiResource('Donation', DonationController::class);
+    //API CRUD Donation
+    //Route::get('/Donation', [DonationController::class, 'index']); //get all data
+    Route::apiResource('Donation', DonationController::class);
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
+
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
